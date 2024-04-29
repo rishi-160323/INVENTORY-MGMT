@@ -9,14 +9,14 @@ export default class ProductController{
         // return res.sendFile(path.join(path.resolve(), 'src', 'views', 'products.html'));
         let products = ProductModel.getAll();
         console.log(products);
-        res.render('products.ejs', {products: products});
+        res.render('products.ejs', {products: products, userEmail: req.session.userEmail});
         next();
 
         // return res.sendFile(path.join(path.resolve('src', 'views', 'products.html')));
     }
 
     getAddForm(req, res, next){
-       return res.render('new-product.ejs',{errorMessage: null});
+       return res.render('new-product.ejs',{errorMessage: null, userEmail: req.session.userEmail});
        next();
     }
 
@@ -26,7 +26,7 @@ export default class ProductController{
         const imageUrl = 'images/'+req.file.filename;
         ProductModel.add(name, desc, price, imageUrl);
         let products = ProductModel.getAll();
-        res.render('products.ejs', {products});
+        res.render('products.ejs', {products, userEmail: req.session.userEmail});
     }
 
     getUpdateProductView(req, res, next){
@@ -35,7 +35,7 @@ export default class ProductController{
         const id = req.params.id;
         const productFound = ProductModel.getById(id);
         if(productFound){
-            res.render('update-product.ejs', {product: productFound, errorMessage: null});
+            res.render('update-product.ejs', {product: productFound, errorMessage: null, userEmail: req.session.userEmail});
         }
         // 2. else return errors.
         else{
@@ -46,7 +46,7 @@ export default class ProductController{
     postUpdateProduct(req, res, next){
         ProductModel.update(req.body);
         let products = ProductModel.getAll();
-        res.render('products.ejs', {products});
+        res.render('products.ejs', {products, userEmail: req.session.userEmail});
         next();
     }
 
@@ -58,6 +58,6 @@ export default class ProductController{
         }
         ProductModel.delete(id);
         let products = ProductModel.getAll();
-        res.render('products', {products})
+        res.render('products', {products, userEmail: req.session.userEmail})
     }
 }

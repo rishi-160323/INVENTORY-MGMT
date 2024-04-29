@@ -36,6 +36,7 @@ server.get('/register', userController.getRegister);
 server.get('/login', userController.getLogin);
 server.post('/register', userController.postRegister);
 server.post('/login', userController.postLogin);
+server.get('/logout', userController.logout);
 server.get('/', auth, productController.getProducts);
 server.get('/add-product', auth, productController.getAddForm);
 server.get('/update-product/:id', auth, productController.getUpdateProductView);
